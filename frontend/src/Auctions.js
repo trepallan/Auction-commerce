@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function HelloWorld() {
+function Auctions() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
 useEffect(() => {
-  axios.get('http://localhost:8000/hello-world/')
+  axios.get('http://localhost:8000/Getauctions/')
     .then(response => {
-      console.log(response.data);
+      setIsLoading(false);
       setProducts(response.data);
     })
     .catch(error => {
       console.log(error);
+      setIsLoading(false);
     });
 }, []);
 
 return (
   <div>
     <h1>Hello, World!</h1>
+    
+    {isLoading && 
+    <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+    </div>}
+
     {products.map(({ id, title, description, price, category, image }) => (
       <div key={id}>
         <h2>{title}</h2>
@@ -31,4 +39,4 @@ return (
 );
     }
 
-export default HelloWorld;
+export default Auctions;
