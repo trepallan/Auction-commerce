@@ -40,6 +40,3 @@ def getUser(request):
     isUserAuth = request.user.username if request.user.is_authenticated  else ''
     return Response({'user': isUserAuth})
 
-
-def login_view(request):
-    return render(request, 'auctions/login.html')

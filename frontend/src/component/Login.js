@@ -33,7 +33,7 @@ function Login() {
             <h3 className="Auth-form-title">Sign In</h3>
             <div className="form-group mt-3">
               <label>Username</label>
-              <input className="form-control mt-1" 
+              <input autoComplete="username" className="form-control mt-1" 
                 placeholder="Enter Username" 
                 name='username'  
                 type='text' value={username}
@@ -42,7 +42,7 @@ function Login() {
             </div>
             <div className="form-group mt-3">
               <label>Password</label>
-              <input name='password' 
+              <input autoComplete="current-password" name='password' 
                 type="password"     
                 className="form-control mt-1"
                 placeholder="Enter password"

@@ -15,11 +15,18 @@ function Home() {
                             'http://localhost:8000/home/', {
                              headers: {
                                 'Content-Type': 'application/json'
-                             }}
+                             },
+                             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                             data: {
+                                refresh: localStorage.getItem('refresh_token')
+                             }
+                            }
+
                            );
              setMessage(data.message);
           } catch (e) {
             console.log('not auth')
+            console.log(e)
           }
          })()};
      }, []);
