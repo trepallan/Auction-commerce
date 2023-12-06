@@ -12,7 +12,7 @@ class HomeView(APIView):
      
    permission_classes = (IsAuthenticated, )
    def get(self, request):
-       content = {'message': 'Welcome to the JWT Authentication page using React Js and Django!'}            
+       content = {'message': 'Damn daniel'}            
        return Response(content)
    
 class LogoutView(APIView):

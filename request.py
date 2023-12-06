@@ -25,10 +25,9 @@ elif type == 2:
 
 elif type == 3:
    url = "http://localhost:8000/logout/"
-   refresh_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzAxODI1MjM4LCJpYXQiOjE3MDE4MjQ2MzgsImp0aSI6IjY5MmZiMDQwNDgxNTQwYjBiOWY3MDQ3NDNjMDQzY2FlIiwidXNlcl9pZCI6MX0.ZA9HNPVk_IkcZphmIJvhr5G9HQNXMMrdjNnuvLc7Zm0"
-
+   refresh_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTcwMTkxMjM0NiwiaWF0IjoxNzAxODI1OTQ2LCJqdGkiOiJiM2VhZjQ0NDAyZTI0OGFlOTFkNTY0NTc5MzJkMjVhYiIsInVzZXJfaWQiOjF9.DQleCViaIGLnwePBKY4ASz3zubjKDRdacmV2htl4pJE"
    headers = {
-      'Authorization': 'Bearer {}'.format(refresh_token)
+      'Authorization': 'Bearer ' + refresh_token
    } 
    response = requests.post(url, headers=headers)
 
