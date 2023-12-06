@@ -12,8 +12,9 @@ class HomeView(APIView):
      
    permission_classes = (IsAuthenticated, )
    def get(self, request):
-       content = {'message': 'Damn daniel'}            
-       return Response(content)
+       content = auction.objects.all()
+       serializer = AuctionSerializer(content, many=True)
+       return Response(serializer.data)
    
 class LogoutView(APIView):
      permission_classes = (IsAuthenticated,)
@@ -27,16 +28,4 @@ class LogoutView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
    
-
-@api_view(['GET'])
-def auctions(request):
-    content = auction.objects.all()
-    serializer = AuctionSerializer(content, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getUser(request):
-    # Check if user is authenticated
-    isUserAuth = request.user.username if request.user.is_authenticated  else ''
-    return Response({'user': isUserAuth})
 

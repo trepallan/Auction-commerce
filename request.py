@@ -31,10 +31,6 @@ elif type == 3:
    } 
    response = requests.post(url, headers=headers)
 
-
-
-
-
 print(response.status_code)
 print(response.json())
 
