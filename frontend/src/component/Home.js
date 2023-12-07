@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "./css/Home.css";
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -30,23 +31,31 @@ function Home() {
 
   return (
     <div>
-      <h1>Hello, World!</h1>
-
       {isLoading && 
         <div className="spinner-border text-primary" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
       }
-
+    <div className="container">
       {products.map(({ id, title, description, price, category, image }) => (
-        <div key={id}>
-          <h2>{title}</h2>
-          <p>{description}</p>
-          <p>{price}</p>
-          <p>{category}</p>
-          <img src={image} alt={title} />
-        </div>
+        <a href={`/product/${id}`}>
+          <div className="card mb-3"key={id}>
+            <div className="row g-0">
+              <div className="col-md-4">
+                <img src={image} className="img-fluid rounded-start" alt={title}></img>
+              </div>
+              <div className="col-md-8">
+                <div className="card-body">
+                  <h5 className="card-title">{title}</h5>
+                  <p className="card-text">{price}</p>
+                  <p className="card-text"><small className="text-body-secondary">{category}</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
       ))}
+    </div>
     </div>
   );
 }
