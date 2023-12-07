@@ -38,8 +38,8 @@ function Home() {
       }
     <div className="container">
       {products.map(({ id, title, description, price, category, image }) => (
-        <a href={`/product/${id}`}>
-          <div className="card mb-3"key={id}>
+        <a href={`/product/${id}` } key={id}>
+          <div className="card mb-3">
             <div className="row g-0">
               <div className="col-md-4">
                 <img src={image} className="img-fluid rounded-start" alt={title}></img>

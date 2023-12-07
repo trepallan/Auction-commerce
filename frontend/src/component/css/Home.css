@@ -1,6 +1,11 @@
 .card {
     max-width: 540px;
 }
+
+a {
+    text-decoration: none;
+}
+
 .container {
     width: 50%;
 }
