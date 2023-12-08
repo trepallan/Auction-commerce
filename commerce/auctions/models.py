@@ -21,14 +21,14 @@ class auction(models.Model):
     title = models.CharField(max_length=15)
     description = models.TextField(max_length=500)
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auctioneer")
+    seller = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auctiones")
     category = models.CharField(max_length=50, choices=Category.choices)
     image = models.URLField(blank=True) 
     watchlist = models.ManyToManyField(User, blank=True, related_name="watchlist")
 
 class bids(models.Model):
     bid = models.DecimalField(max_digits=6, decimal_places=2)
-    auction = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="auction")
+    auction = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="bid")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caller")
     
     def __str__(self):
@@ -37,7 +37,7 @@ class bids(models.Model):
 class Comments(models.Model):
     comment = models.TextField(max_length=100)
     user  = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_commenter")
-    iten = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="auction_product")
+    iten = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="comments")
 
     def __str__(self):
         return f"{self.user} coment {self.comment} on {self.iten}" 

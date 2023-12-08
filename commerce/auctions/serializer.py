@@ -1,10 +1,17 @@
 from rest_framework import serializers
 from .models import auction, bids, Comments, sold, Category
 
-class AuctionSerializer(serializers.ModelSerializer):
+class AuctionListSerializer(serializers.ModelSerializer):
     class Meta:
         model = auction
-        fields='__all__'
+        fields=('id','title','price','category','image')
+
+class AuctionSerializer(serializers.ModelSerializer):
+    comments = serializers.StringRelatedField(many=True)
+    bid = serializers.StringRelatedField(allow_null=True)
+    class Meta:
+        model = auction
+        fields=('id','title','price','category','image','comments','bid')
 
 class AidsSerializer(serializers.ModelSerializer):
     class Meta:
