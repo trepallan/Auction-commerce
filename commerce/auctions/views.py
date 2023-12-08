@@ -1,5 +1,5 @@
 from auctions.models import auction, bids, Category, Comments, sold
-from auctions.serializer import AuctionSerializer, AidsSerializer, CommentsSerializer, SoldSerializer
+from auctions.serializer import AuctionListSerializer, AidsSerializer, CommentsSerializer, SoldSerializer, AuctionSerializer
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
@@ -13,7 +13,7 @@ class HomeView(APIView):
    permission_classes = (IsAuthenticated, )
    def get(self, request):
        content = auction.objects.all()
-       serializer = AuctionSerializer(content, many=True)
+       serializer = AuctionListSerializer(content, many=True)
        return Response(serializer.data)
    
 class LogoutView(APIView):
@@ -28,4 +28,11 @@ class LogoutView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
    
+class AuctionView(APIView):
+     # Load auction details
+     permission_classes = (IsAuthenticated, )
+     def get(self, request, pk):
+          content = auction.objects.get(id=pk)
+          serializer = AuctionSerializer(content)
+          return Response(serializer.data)
 
