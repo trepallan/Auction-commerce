@@ -8,7 +8,7 @@ class AuctionListSerializer(serializers.ModelSerializer):
 
 class AuctionSerializer(serializers.ModelSerializer):
     comments = serializers.StringRelatedField(many=True)
-    bid = serializers.StringRelatedField(allow_null=True)
+    bid = serializers.StringRelatedField()
     class Meta:
         model = auction
         fields=('id','title','price','category','image','comments','bid')

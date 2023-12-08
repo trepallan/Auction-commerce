@@ -37,7 +37,7 @@ function Home() {
         </div>
       }
     <div className="container">
-      {products.map(({ id, title, description, price, category, image }) => (
+      {products.map(({ id, title, price, category, image, description }) => (
         <a href={`/product/${id}` } key={id}>
           <div className="card mb-3">
             <div className="row g-0">
