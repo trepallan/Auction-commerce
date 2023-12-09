@@ -1,6 +1,7 @@
 // Import the react JS packages 
 import axios from "axios";
 import {useState} from "react";
+import "./css/Login.css";
 // Define the Login function.
 function Login() {
 // Define the state of the form.
@@ -55,6 +56,9 @@ function Login() {
                  className="btn btn-primary">Submit</button>
             </div>
           </div>
+          <small className="form-text text-muted mt-3">
+                Not registered? <a href="/register">Sign Up</a>
+          </small>
        </form>
      </div>
     )

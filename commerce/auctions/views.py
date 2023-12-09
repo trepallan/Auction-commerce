@@ -1,5 +1,6 @@
 from auctions.models import auction, bids, Category, Comments, sold
 from auctions.serializer import AuctionListSerializer, AidsSerializer, CommentsSerializer, SoldSerializer, AuctionSerializer
+from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
@@ -14,7 +15,19 @@ class HomeView(APIView):
    def get(self, request):
        content = auction.objects.all()
        serializer = AuctionListSerializer(content, many=True)
+       print(request.user.username)
        return Response(serializer.data)
+   
+class CreateUserView(APIView):
+     def post(self, request):
+          try:
+               username = request.data["username"]
+               password = request.data["password"]
+               email = request.data["email"]
+               User.objects.create_user(username=username, password=password, email=email)
+               return Response(status=status.HTTP_201_CREATED)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
    
 class LogoutView(APIView):
      permission_classes = (IsAuthenticated,)
@@ -34,6 +47,5 @@ class AuctionView(APIView):
      def get(self, request, pk):
           content = auction.objects.get(id=pk)
           serializer = AuctionSerializer(content)
-          print(serializer.data)
           return Response(serializer.data)
 
