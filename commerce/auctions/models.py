@@ -32,7 +32,7 @@ class bids(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caller")
     
     def __str__(self):
-        return f"{self.user} bid {self.bid} on {self.auction}"
+        return '%s: %s' % (self.user.username, self.bid)
     
 class Comments(models.Model):
     comment = models.TextField(max_length=100)
@@ -40,7 +40,7 @@ class Comments(models.Model):
     iten = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="comments")
 
     def __str__(self):
-        return f"{self.user} coment {self.comment} on {self.iten}" 
+       return '%s: %s' % (self.user.username, self.comment)
 
 
 class sold(models.Model):

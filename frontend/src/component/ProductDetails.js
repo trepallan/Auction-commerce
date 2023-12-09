@@ -19,7 +19,11 @@ function Details() {
     }, [id]);
   return (
     <>
+        {auction.map(({ id, title, price, category, image, watchlist,description, comments, bid }) => (
+            <div key={id}>
 
+            </div>
+        ))}
     </>
   )
 }

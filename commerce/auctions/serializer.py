@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import auction, bids, Comments, sold, Category
+from django.contrib.auth.models import User
 
 class AuctionListSerializer(serializers.ModelSerializer):
     class Meta:
@@ -9,9 +10,10 @@ class AuctionListSerializer(serializers.ModelSerializer):
 class AuctionSerializer(serializers.ModelSerializer):
     comments = serializers.StringRelatedField(many=True)
     bid = serializers.StringRelatedField()
+    watchlist = serializers.StringRelatedField(many=True, required=False)
     class Meta:
         model = auction
-        fields=('id','title','price','category','image','comments','bid')
+        fields = ('id', 'title', 'price', 'category', 'image', 'comments', 'bid', 'watchlist')
 
 class AidsSerializer(serializers.ModelSerializer):
     class Meta:

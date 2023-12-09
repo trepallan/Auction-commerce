@@ -47,5 +47,6 @@ class AuctionView(APIView):
      def get(self, request, pk):
           content = auction.objects.get(id=pk)
           serializer = AuctionSerializer(content)
+          print(serializer.data)
           return Response(serializer.data)
 
