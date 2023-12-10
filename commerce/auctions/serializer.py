@@ -9,11 +9,14 @@ class AuctionListSerializer(serializers.ModelSerializer):
 
 class AuctionSerializer(serializers.ModelSerializer):
     comments = serializers.StringRelatedField(many=True)
-    bid = serializers.StringRelatedField()
-    watchlist = serializers.StringRelatedField(many=True, required=False)
+    watchlist = serializers.SerializerMethodField()
     class Meta:
         model = auction
-        fields = ('id', 'title', 'price', 'category', 'image', 'comments', 'bid', 'watchlist')
+        fields = ('id', 'title', 'price', 'category', 'image', 'comments', 'watchlist')
+    def get_watchlist(self, obj):
+        request = self.context.get('request')
+        user = request.user
+        return user in obj.watchlist.all()
 
 class AidsSerializer(serializers.ModelSerializer):
     class Meta:
