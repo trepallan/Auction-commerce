@@ -1,0 +1,21 @@
+#productImg {
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    object-fit: cover;
+    float: left;
+}
+
+.detailsContainer {
+    position: relative;
+    height: 500px;
+}
+
+#watchlistBtn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+.auctionComments {
+    max-width: 900px;;
+}

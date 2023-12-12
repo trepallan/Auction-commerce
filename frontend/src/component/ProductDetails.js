@@ -1,4 +1,5 @@
 import axios from 'axios';
+import './css/ProductDetails.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
@@ -32,7 +33,7 @@ function Details() {
         }
         setWatchlistInProgress(true); 
         watchlist ? setWatchlist(false) : setWatchlist(true)
-        const {response}= await axios.post(`http://localhost:8000/watchlist/`,
+        await axios.post(`http://localhost:8000/watchlist/`,
         auction.id, {
           headers: {
             'Content-Type': 'application/json',
@@ -49,20 +50,36 @@ function Details() {
   
     return (
       <>
-        <div className='d-flex'>
-          <img src={auction.image} className="img-thumbnail" alt="" />
+        <div className='imgContainer'>
+          <img src={auction.image} id="productImg" className="img-thumbnail" alt="" />
         </div>
-        <div>
+        <div className="detailsContainer">
           <h1><strong>{auction.title}</strong></h1>
-          <p>{auction.price}</p>
           <p className='text-muted'><small>{auction.category}</small></p>
-          <p>{auction.description}</p>
+          <p >{auction.description}</p>
+          <h3>${auction.price}</h3>
+          <p className='text-muted'><small>Posted by <strong>{auction.seller}</strong></small></p>
+          <div id='watchlistBtn'>
           {watchlist ? (
-            <button type="button" className="btn btn-outline-warning" onClick={aplowdWatchlist}> Remove from watchlist</button>
+            <button type="button" className="btn btn-warning" onClick={aplowdWatchlist}> Remove from watchlist</button>
           ) : (
-            <button type="button" className="btn btn-outline-info" onClick={aplowdWatchlist}> Add to watchlist</button>
+            <button type="button" className="btn btn-info" onClick={aplowdWatchlist}> Add to watchlist</button>
           )}
+          </div>
         </div>
+
+        
+        <div className='auctionComments'>
+          <h3>Comments</h3>
+          <ul>
+            {auction.comments.map((comment) => (
+              <li key={comment.id}>
+                <p><strong>{comment.user}</strong></p>
+                <p>{comment.comment}</p>
+              </li>
+            ))}
+          </ul>
+        </div> 
       </>
     );
   }

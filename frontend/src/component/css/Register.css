@@ -1,24 +1,19 @@
-@import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
-body{
-  background: #fff;
-  font-family: 'PT Sans', sans-serif;
-}
-h2{
+#H2_register{
   padding-top: 1.5rem;
 }
-a{
+#a_login{
   color: #333;
 }
-a:hover{
+#a_login:hover{
   color: #da5767;
   text-decoration: none;
 }
-.card{
+#register_card{
   border: 0.40rem solid #f8f9fa;
   top: 10%;
 }
-.form-control{
+.form_control_{
   background-color: #f8f9fa;
   width: 400px;
   height: 50px;
@@ -27,7 +22,7 @@ a:hover{
   margin-bottom: 1.3rem;
 }
 
-.form-control:focus {
+.form_control_:focus {
 
     color: #000000;
     background-color: #ffffff;
@@ -37,16 +32,13 @@ a:hover{
 
 }
 
-.btn{
+.login_btn{
   padding: 0.6rem 1.2rem;
   background: #da5767;
   border: 2px solid #da5767;
 }
-.btn-primary:hover {
-
-    
+.login_btn:hover {
     background-color: #df8c96;
     border-color: #df8c96;
   transition: .3s;
-
 }
