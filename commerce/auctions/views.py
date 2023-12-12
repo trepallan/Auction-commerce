@@ -46,7 +46,21 @@ class AuctionView(APIView):
      permission_classes = (IsAuthenticated, )
      def get(self, request, pk):
           content = auction.objects.get(id=pk)
-          serializer = AuctionSerializer(content)
-          print(serializer.data)
+          serializer = AuctionSerializer(content, context={'request': request})
           return Response(serializer.data)
-
+     
+class WatchlistView(APIView):
+     # Add or remove item from watchlist
+     permission_classes = (IsAuthenticated, )
+     def post(self, request):
+          try:
+               auction_id = request.data
+               user = request.user
+               if user in auction.objects.get(id=auction_id).watchlist.all():
+                    auction.objects.get(id=auction_id).watchlist.remove(user)
+               else:
+                    auction.objects.get(id=auction_id).watchlist.add(user)
+               return Response(status=status.HTTP_200_OK)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
+          

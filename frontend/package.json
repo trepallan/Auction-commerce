@@ -2,6 +2,11 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!axios)/"
+    ]
+  },
   "dependencies": {
     "@adobe/css-tools": "^4.3.2",
     "@testing-library/jest-dom": "^5.17.0",

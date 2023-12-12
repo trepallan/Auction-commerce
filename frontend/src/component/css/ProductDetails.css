@@ -1,0 +1,28 @@
+#productImg {
+    width: 500px;
+    height: 500px;
+    border-radius: 10px;
+    margin-right: 20px;
+    object-fit: cover;
+    float: left;
+}
+
+.detailsContainer {
+    position: relative;
+    height: 500px;
+}
+
+#ButtonsContainer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.auctionComments {
+    max-width: 900px;;
+}

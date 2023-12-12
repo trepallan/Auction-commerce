@@ -39,8 +39,12 @@ class Comments(models.Model):
     user  = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_commenter")
     iten = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="comments")
 
-    def __str__(self):
-       return '%s: %s' % (self.user.username, self.comment)
+    def serializer(self):
+        return {
+            'id': self.id,
+            'user': self.user.username,
+            'comment': self.comment
+        }
 
 
 class sold(models.Model):

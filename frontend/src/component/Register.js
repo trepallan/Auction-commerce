@@ -2,7 +2,6 @@ import { useState } from "react";
 import axios from "axios";
 import "./css/Register.css";
 
-
 function Register() {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -33,8 +32,8 @@ function Register() {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-5">
-              <div className="card">
-                <h2 className="card-title text-center">
+              <div id="register_card" className="card">
+                <h2 id="H2_register" className="card-title text-center">
                   Register
                 </h2>
                 <div className="card-body py-md-4">
@@ -42,7 +41,7 @@ function Register() {
                     <div className="form-group">
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control form_control_"
                         autoComplete="username"
                         id="name"
                         placeholder="Name"
@@ -54,7 +53,7 @@ function Register() {
                     <div className="form-group">
                       <input
                         type="email"
-                        className="form-control"
+                        className="form-control form_control_"
                         id="email"
                         placeholder="Email"
                         autoComplete="email"
@@ -66,7 +65,7 @@ function Register() {
                     <div className="form-group">
                       <input
                         type="password"
-                        className="form-control"
+                        className="form-control form_control_"
                         id="password"
                         placeholder="Password"
                         autoComplete="new-password"
@@ -79,7 +78,7 @@ function Register() {
                       <input
                         type="password"
                         autoComplete="new-password"
-                        className="form-control"
+                        className="form-control form_control_"
                         id="confirm-password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
@@ -88,8 +87,8 @@ function Register() {
                       />
                     </div>
                     <div className="d-flex flex-row align-items-center justify-content-between">
-                      <a href="/login">Login</a>
-                      <button className="btn btn-primary">Create Account</button>
+                      <a id="a_login" href="/login">Login</a>
+                      <button className="btn btn-primary login_btn">Create Account</button>
                     </div>
                   </form>
                 </div>
