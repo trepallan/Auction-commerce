@@ -26,7 +26,21 @@ function Details() {
       })();
     }, [id]);
   
+    function handleBidDiv() {
+      let f = document.getElementsByClassName("makeBid");
+      if (f[0].style.display === "none") {
+        f[0].style.display = "block";
+      }
+      else {
+        f[0].style.display = "none";
+      }
+    }
+
+    const handleBidding = async () => {
+      
+    }
     async function aplowdWatchlist() {
+      // Update the watchlist
         if (watchlistInProgress) {
           alert("Please wait...")
           return;
@@ -50,6 +64,7 @@ function Details() {
   
     return (
       <>
+      {/* Auction Details */}
         <div className='imgContainer'>
           <img src={auction.image} id="productImg" className="img-thumbnail" alt="" />
         </div>
@@ -60,7 +75,7 @@ function Details() {
           <h3>${auction.price}</h3>
           <p className='text-muted'><small>Posted by <strong>{auction.seller}</strong></small></p>
           <div id='ButtonsContainer'>
-          <button type='button' className='btn btn-success'>Make Bid</button>
+          <button  type='button' className='btn btn-success' onClick={handleBidDiv}>Make Bid</button>
           {watchlist ? (
             <button type="button" className="btn btn-warning" onClick={aplowdWatchlist}> Remove from watchlist</button>
           ) : (
@@ -69,7 +84,28 @@ function Details() {
           </div>
         </div>
 
+
+        {/* Make Bid */}
         
+        <div className='makeBid'>
+            <button type="button" className="btn-close" aria-label="Close" onClick={handleBidDiv}></button>
+            <h3>Make Bid</h3>
+            <form>
+              <div className="form-group">
+                <label htmlFor="bidAmount">Bid Amount</label>
+                <input type="number" className="form-control" id="bidAmount" />
+              </div>
+              <br />
+              <small>Your bid must be higher than the current price </small>
+              <br />
+              <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-primary"> Confirm</button>
+              </div>
+            </form>
+          </div>
+
+
+        {/* Comments */}
         <div className='auctionComments'>
           <h3>Comments</h3>
           <ul>
