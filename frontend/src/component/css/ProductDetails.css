@@ -29,7 +29,7 @@ button {
 
 .makeBid {
     width: max-content;
-    position: absolute;
+    position: fixed;
     top: 40%;
     left: 40%;
     background: #4f4c4c;

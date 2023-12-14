@@ -25,6 +25,7 @@ function Details() {
         }
       })();
     }, [id]);
+
   
     function handleBidDiv() {
       let f = document.getElementsByClassName("makeBid");
@@ -36,9 +37,39 @@ function Details() {
       }
     }
 
-    const handleBidding = async () => {
-      
+    function handleBidSubmit(e) {
+      e.preventDefault();
+      let dataInt = document.getElementById("bidAmount").value;
+      const data = parseInt(dataInt);
+      if (data === "" || data <= auction.price) {
+        alert("Please enter a valid bid amount");
+        return;
+      }
+      (async () => {
+        try {
+          const response = await axios.post(`http://localhost:8000/bid/${auction.id}/`, data, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+          });
+          if (response.status === 200)
+          {
+            alert("Bid placed successfully");
+            window.location.reload(); 
+          }
+          else
+          {
+            alert("Something went wrong");
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
     }
+
+
     async function aplowdWatchlist() {
       // Update the watchlist
         if (watchlistInProgress) {
@@ -87,16 +118,17 @@ function Details() {
 
         {/* Make Bid */}
         
-        <div className='makeBid'>
+        <div className='makeBid' style={{ display: 'none' }}>
             <button type="button" className="btn-close" aria-label="Close" onClick={handleBidDiv}></button>
             <h3>Make Bid</h3>
-            <form>
+            <small><strong>Please enter your bid with cents and no pontuation</strong></small>
+            <form onSubmit={handleBidSubmit}>
               <div className="form-group">
                 <label htmlFor="bidAmount">Bid Amount</label>
-                <input type="number" className="form-control" id="bidAmount" />
+                <input type="number" className="form-control" id="bidAmount"/>
               </div>
               <br />
-              <small>Your bid must be higher than the current price </small>
+              <small>Your bid must be higher than the current price of ${auction.price}</small>
               <br />
               <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary"> Confirm</button>
