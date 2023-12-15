@@ -15,7 +15,6 @@ class HomeView(APIView):
    def get(self, request):
        content = auction.objects.all()
        serializer = AuctionListSerializer(content, many=True)
-       print(request.user.username)
        return Response(serializer.data)
    
 class CreateUserView(APIView):

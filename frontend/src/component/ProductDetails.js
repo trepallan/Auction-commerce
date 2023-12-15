@@ -39,15 +39,16 @@ function Details() {
 
     function handleBidSubmit(e) {
       e.preventDefault();
-      let dataInt = document.getElementById("bidAmount").value;
-      const data = parseInt(dataInt);
-      if (data === "" || data <= auction.price) {
+      const inputStr = document.getElementById("bidAmount").value;
+      const inputFloat = parseFloat(inputStr / 100);
+      const currentPrice = parseFloat(auction.price);
+      if (inputFloat === "" || inputFloat <= currentPrice) {
         alert("Please enter a valid bid amount");
         return;
       }
       (async () => {
         try {
-          const response = await axios.post(`http://localhost:8000/bid/${auction.id}/`, data, {
+          const response = await axios.post(`http://localhost:8000/bid/${auction.id}/`, inputStr, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${localStorage.getItem('access_token')}`

@@ -11,9 +11,11 @@ export function Navigation() {
      return ( 
       <div>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/">JWT Authentification</Navbar.Brand>            
+          <Navbar.Brand href="/"> Commerce</Navbar.Brand>            
           <Nav className="me-auto"> 
-          {isAuth ? <Nav.Link href="/">Home</Nav.Link> : null}
+          {isAuth ? <Nav.Link href='/makeauction'>Post Auction</Nav.Link> : null}
+          {isAuth ? <Nav.Link href="/">Home</Nav.Link>
+          : null}
           </Nav>
           <Nav>
           {isAuth ? <Nav.Link href="/logout">Logout</Nav.Link> :  
