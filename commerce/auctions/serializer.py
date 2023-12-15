@@ -26,20 +26,6 @@ class AuctionSerializer(serializers.ModelSerializer):
     def get_comments(self, obj):
         comments = Comments.objects.filter(iten=obj)
         return  [comment.serializer() for comment in comments]
-class AidsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = bids
-        fields='__all__'
-
-class CommentsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Comments
-        fields='__all__'
-
-class SoldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = sold
-        fields='__all__'
 
 
 

@@ -25,8 +25,54 @@ function Details() {
         }
       })();
     }, [id]);
+
   
+    function handleBidDiv() {
+      let f = document.getElementsByClassName("makeBid");
+      if (f[0].style.display === "none") {
+        f[0].style.display = "block";
+      }
+      else {
+        f[0].style.display = "none";
+      }
+    }
+
+    function handleBidSubmit(e) {
+      e.preventDefault();
+      const inputStr = document.getElementById("bidAmount").value;
+      const inputFloat = parseFloat(inputStr / 100);
+      const currentPrice = parseFloat(auction.price);
+      if (inputFloat === "" || inputFloat <= currentPrice) {
+        alert("Please enter a valid bid amount");
+        return;
+      }
+      (async () => {
+        try {
+          const response = await axios.post(`http://localhost:8000/bid/${auction.id}/`, inputStr, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+          });
+          if (response.status === 200)
+          {
+            alert("Bid placed successfully");
+            window.location.reload(); 
+          }
+          else
+          {
+            alert("Something went wrong");
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+
+
     async function aplowdWatchlist() {
+      // Update the watchlist
         if (watchlistInProgress) {
           alert("Please wait...")
           return;
@@ -50,6 +96,7 @@ function Details() {
   
     return (
       <>
+      {/* Auction Details */}
         <div className='imgContainer'>
           <img src={auction.image} id="productImg" className="img-thumbnail" alt="" />
         </div>
@@ -60,7 +107,7 @@ function Details() {
           <h3>${auction.price}</h3>
           <p className='text-muted'><small>Posted by <strong>{auction.seller}</strong></small></p>
           <div id='ButtonsContainer'>
-          <button type='button' className='btn btn-success'>Make Bid</button>
+          <button  type='button' className='btn btn-success' onClick={handleBidDiv}>Make Bid</button>
           {watchlist ? (
             <button type="button" className="btn btn-warning" onClick={aplowdWatchlist}> Remove from watchlist</button>
           ) : (
@@ -69,7 +116,29 @@ function Details() {
           </div>
         </div>
 
+
+        {/* Make Bid */}
         
+        <div className='makeBid' style={{ display: 'none' }}>
+            <button type="button" className="btn-close" aria-label="Close" onClick={handleBidDiv}></button>
+            <h3>Make Bid</h3>
+            <small><strong>Please enter your bid with cents and no pontuation</strong></small>
+            <form onSubmit={handleBidSubmit}>
+              <div className="form-group">
+                <label htmlFor="bidAmount">Bid Amount</label>
+                <input type="number" className="form-control" id="bidAmount"/>
+              </div>
+              <br />
+              <small>Your bid must be higher than the current price of ${auction.price}</small>
+              <br />
+              <div className="d-grid gap-2">
+                <button type="submit" className="btn btn-primary"> Confirm</button>
+              </div>
+            </form>
+          </div>
+
+
+        {/* Comments */}
         <div className='auctionComments'>
           <h3>Comments</h3>
           <ul>

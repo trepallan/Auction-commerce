@@ -26,10 +26,17 @@ class auction(models.Model):
     image = models.URLField(blank=True) 
     watchlist = models.ManyToManyField(User, blank=True, related_name="watchlist")
 
+
 class bids(models.Model):
     bid = models.DecimalField(max_digits=6, decimal_places=2)
     auction = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="bid")
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="caller")
+
+    def save(self, *args, **kwargs):
+        if self.bid > self.auction.price:
+            self.auction.price = self.bid
+            self.auction.save()
+        super().save(*args, **kwargs)
     
     def __str__(self):
         return '%s: %s' % (self.user.username, self.bid)

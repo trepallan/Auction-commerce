@@ -1,5 +1,5 @@
 from auctions.models import auction, bids, Category, Comments, sold
-from auctions.serializer import AuctionListSerializer, AidsSerializer, CommentsSerializer, SoldSerializer, AuctionSerializer
+from auctions.serializer import AuctionListSerializer, AuctionSerializer
 from django.contrib.auth.models import User
 from django.shortcuts import render
 from rest_framework.decorators import api_view
@@ -15,7 +15,6 @@ class HomeView(APIView):
    def get(self, request):
        content = auction.objects.all()
        serializer = AuctionListSerializer(content, many=True)
-       print(request.user.username)
        return Response(serializer.data)
    
 class CreateUserView(APIView):
@@ -61,6 +60,26 @@ class WatchlistView(APIView):
                else:
                     auction.objects.get(id=auction_id).watchlist.add(user)
                return Response(status=status.HTTP_200_OK)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
+          
+
+class BidView(APIView):
+     # Add or remove item from watchlist
+     permission_classes = (IsAuthenticated, )
+     def post(self, request, pk):
+          try:
+               auction_id = pk
+               user = request.user
+               price = request.data / 100
+               try:
+                    bid = bids.objects.get(auction=auction_id, user=user)
+                    bid.bid = price
+                    bid.save()
+               except Exception as e:
+                    bids.objects.create(auction=auction.objects.get(id=auction_id), user=user, bid=price)
+               return Response(status=status.HTTP_200_OK) 
+
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
           
