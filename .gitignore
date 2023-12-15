@@ -2,3 +2,4 @@
 .env
 commerce/auctions/migrations/
 commerce/auctions/__pycache__/
+commerce/commerce/__pycache__/
