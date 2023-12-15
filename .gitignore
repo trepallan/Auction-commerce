@@ -1,3 +1,4 @@
 .venv
 .env
 commerce/auctions/migrations/
+commerce/auctions/__pycache__/
