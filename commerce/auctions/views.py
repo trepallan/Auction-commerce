@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
+from django.http import JsonResponse
 
 class HomeView(APIView):
      
@@ -17,6 +18,7 @@ class HomeView(APIView):
        serializer = AuctionListSerializer(content, many=True)
        return Response(serializer.data)
    
+
 class CreateUserView(APIView):
      def post(self, request):
           try:
@@ -40,6 +42,14 @@ class LogoutView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
    
+
+class CategoryView(APIView):
+     # Load all categories available
+     def get(self, request):
+          content = Category
+          return JsonResponse(list(content.choices), safe=False)
+ 
+ 
 class AuctionView(APIView):
      # Load auction details
      permission_classes = (IsAuthenticated, )
@@ -83,3 +93,18 @@ class BidView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
           
+class NewAuctionView(APIView):
+     # Create new auction
+     permission_classes = (IsAuthenticated, )
+     def post(self, request):
+          try:
+               title = request.data["title"]
+               description = request.data["description"]
+               price = request.data["price"]
+               seller = request.user
+               category = request.data["category"]
+               image = request.data["image"]
+               auction.objects.create(title=title, description=description, price=price, seller=seller, category=category, image=image)
+               return Response(status=status.HTTP_201_CREATED)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)

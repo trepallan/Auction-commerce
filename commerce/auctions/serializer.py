@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 
 class AuctionListSerializer(serializers.ModelSerializer):
+    category = serializers.CharField(source='get_category_display')
     class Meta:
         model = auction
         fields=('id','title','price','category','image')
@@ -26,7 +27,7 @@ class AuctionSerializer(serializers.ModelSerializer):
     def get_comments(self, obj):
         comments = Comments.objects.filter(iten=obj)
         return  [comment.serializer() for comment in comments]
-
+    
 
 
   

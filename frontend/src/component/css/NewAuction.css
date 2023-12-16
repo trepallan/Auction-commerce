@@ -1,0 +1,16 @@
+#new-auction-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.new-auction-field {
+    margin-bottom: 10px;
+    width: 800px;
+}
+
+.badge {
+    margin-left: 4px;
+    
+}
