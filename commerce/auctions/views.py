@@ -108,3 +108,22 @@ class NewAuctionView(APIView):
                return Response(status=status.HTTP_201_CREATED)
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
+          
+
+class DeleteAuctionView(APIView):
+     # Create new auction
+     permission_classes = (IsAuthenticated, )
+     def delete(self, request, pk):
+          try:
+               seller = request.user
+               try:
+                    winner = bids.objects.get(auction=auction.objects.get(id=pk), bid=auction.objects.get(id=pk).price).user
+                    value = auction.objects.get(id=pk).price
+                    if seller != winner:
+                         sold.objects.create(auction=pk, buyer=seller, seller=winner, value=value)
+               except Exception as e:
+                    print(e)
+               auction.objects.get(id=pk).delete()
+               return Response(status=status.HTTP_204_NO_CONTENT)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)

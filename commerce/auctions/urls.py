@@ -10,6 +10,7 @@ urlpatterns = [
     path('watchlist/', views.WatchlistView.as_view(), name ='watchlist'),
     path('categories/', views.CategoryView.as_view(), name ='categories'),
     path('newAuction/', views.NewAuctionView.as_view(), name ='new'),
+    path('DeleteAuction/<int:pk>/', views.DeleteAuctionView.as_view(), name ='delete'),
     path('bid/<int:pk>/', views.BidView.as_view(), name ='bid'),
     
 ]

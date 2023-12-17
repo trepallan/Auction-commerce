@@ -1,5 +1,5 @@
 import axios from 'axios';
-import './css/ProductDetails.css';
+import './css/AuctionView.css';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
@@ -7,6 +7,7 @@ function Details() {
     const [auction, setAuction] = useState(null);
     const [watchlist, setWatchlist] = useState(false);
     const [watchlistInProgress, setWatchlistInProgress] = useState(false);
+    const [isSold, setIsSold] = useState(false);
     const { id } = useParams();
   
     useEffect(() => {
@@ -26,6 +27,28 @@ function Details() {
       })();
     }, [id]);
 
+    function handleDelete() {
+      (async () => {
+        try {
+          const response = await axios.delete(`http://localhost:8000/DeleteAuction/${id}`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+          });
+          if (response.status === 204) {
+            alert("Auction deleted successfully");
+            window.location.href = "/";
+          }
+          else {
+            alert("Something went wrong");
+            return;
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
   
     function handleBidDiv() {
       let f = document.getElementsByClassName("makeBid");
@@ -107,6 +130,9 @@ function Details() {
           <h3>${auction.price}</h3>
           <p className='text-muted'><small>Posted by <strong>{auction.seller}</strong></small></p>
           <div id='ButtonsContainer'>
+          { localStorage.getItem('username') === auction.seller && (
+            <button type="button" className="btn btn-danger" onClick={handleDelete}>Finish Auction</button>
+          )}
           <button  type='button' className='btn btn-success' onClick={handleBidDiv}>Make Bid</button>
           {watchlist ? (
             <button type="button" className="btn btn-warning" onClick={aplowdWatchlist}> Remove from watchlist</button>

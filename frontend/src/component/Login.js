@@ -20,6 +20,7 @@ function Login() {
             {'Content-Type': 'application/json'}});
         // Initialize the access & refresh token in localstorage.      
         localStorage.clear();
+        localStorage.setItem('username', username);
         localStorage.setItem('access_token', data.access);
         localStorage.setItem('refresh_token', data.refresh);
         axios.defaults.headers.common['Authorization'] = 

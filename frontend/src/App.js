@@ -4,7 +4,7 @@ import Login from './component/Login';
 import Home from './component/Home';
 import Navigation from './component/Navigation';
 import Logout from './component/Logout';
-import  Details from './component/ProductDetails.js';
+import  Details from './component/AuctionView.js';
 import Register from './component/Register';
 import NewAuction from './component/NewAuction';
 

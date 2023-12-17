@@ -3,16 +3,18 @@ import Navbar from 'react-bootstrap/Navbar';
 import React, { useState, useEffect} from 'react';
 export function Navigation() {
    const [isAuth, setIsAuth] = useState(false);
+   const [username, setUsername] = useState(null);
    useEffect(() => {
      if (localStorage.getItem('access_token') !== null) {
+        setUsername(localStorage.getItem('username'));
         setIsAuth(true); 
       }
-    }, [isAuth]);
+    }, [isAuth, username]);
      return ( 
       <div>
         <Navbar bg="dark" variant="dark">
-          <Navbar.Brand href="/"> Commerce</Navbar.Brand>            
-          <Nav className="me-auto"> 
+          <Navbar.Brand href="/"> Welcome {username}</Navbar.Brand>
+          <Nav className="me-auto">
           {isAuth ? <Nav.Link href='/makeauction'>Post Auction</Nav.Link> : null}
           {isAuth ? <Nav.Link href="/">Home</Nav.Link>
           : null}
