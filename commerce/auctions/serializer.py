@@ -27,7 +27,19 @@ class AuctionSerializer(serializers.ModelSerializer):
     def get_comments(self, obj):
         comments = Comments.objects.filter(iten=obj)
         return  [comment.serializer() for comment in comments]
-    
+
+
+class soldSerializer(serializers.ModelSerializer):
+    buyer = serializers.SerializerMethodField()
+    seller = serializers.SerializerMethodField()
+    is_sold = serializers.BooleanField(default=True)
+    class Meta:
+        model = sold
+        fields = ('auction_id', 'auction_title', 'buyer', 'seller', 'value', 'is_sold')
+    def get_buyer(self, obj):
+        return obj.buyer.username
+    def get_seller(self, obj):
+        return obj.seller.username
 
 
   

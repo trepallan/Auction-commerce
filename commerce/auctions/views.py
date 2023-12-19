@@ -1,8 +1,6 @@
 from auctions.models import auction, bids, Category, Comments, sold
-from auctions.serializer import AuctionListSerializer, AuctionSerializer
+from auctions.serializer import AuctionListSerializer, AuctionSerializer, soldSerializer
 from django.contrib.auth.models import User
-from django.shortcuts import render
-from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -54,9 +52,18 @@ class AuctionView(APIView):
      # Load auction details
      permission_classes = (IsAuthenticated, )
      def get(self, request, pk):
-          content = auction.objects.get(id=pk)
-          serializer = AuctionSerializer(content, context={'request': request})
-          return Response(serializer.data)
+          try:
+              content = auction.objects.filter(id=pk).first()
+              if content:
+                  serializer = AuctionSerializer(content, context={'request': request})
+                  return Response(serializer.data)
+              else:
+                  content = sold.objects.get(auction_id=pk)
+                  serializer = soldSerializer(content)
+                  return Response(serializer.data)
+          except Exception as e:
+               print(e)
+               return Response(status=status.HTTP_400_BAD_REQUEST)
      
 class WatchlistView(APIView):
      # Add or remove item from watchlist
@@ -118,9 +125,10 @@ class DeleteAuctionView(APIView):
                seller = request.user
                try:
                     winner = bids.objects.get(auction=auction.objects.get(id=pk), bid=auction.objects.get(id=pk).price).user
+                    auction_title = auction.objects.get(id=pk).title
                     value = auction.objects.get(id=pk).price
                     if seller != winner:
-                         sold.objects.create(auction=pk, buyer=seller, seller=winner, value=value)
+                         sold.objects.create(auction_id=pk ,auction_title=auction_title , buyer=winner , seller=seller , value=value) 
                except Exception as e:
                     print(e)
                auction.objects.get(id=pk).delete()
