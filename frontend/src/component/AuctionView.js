@@ -19,8 +19,14 @@ function Details() {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`
             }
           });
-          setAuction(response.data);
-          setWatchlist(response.data.watchlist);
+          if (response.data.is_sold) {
+            setIsSold(true);
+            console.log(response.data);
+            setAuction(response.data);
+          } else {
+            setAuction(response.data);
+            setWatchlist(response.data.watchlist);
+          }
         } catch (error) {
           console.log(error);
         }
@@ -119,7 +125,18 @@ function Details() {
   
     return (
       <>
-      {/* Auction Details */}
+      {/* If the auction is sold */}
+      {isSold && (
+        <div id="AucisSold">
+          <h1>{auction.auction_title} is sold</h1>
+          <p>{auction.buyer} bought it for ${auction.value} from {auction.seller}</p>
+        </div>
+      )}
+
+      {!isSold && (
+         <div>
+        {/* Auction Details */}
+
         <div className='imgContainer'>
           <img src={auction.image} id="productImg" className="img-thumbnail" alt="" />
         </div>
@@ -175,7 +192,9 @@ function Details() {
               </li>
             ))}
           </ul>
-        </div> 
+        </div>
+      </div>
+      )}
       </>
     );
   }

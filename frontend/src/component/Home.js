@@ -36,6 +36,7 @@ function Home() {
           <span className="visually-hidden">Loading...</span>
         </div>
       }
+      {products.length === 0 && !isLoading && <p>No products found</p>}
     <div className="container">
       {products.map(({ id, title, price, category, image}) => (
         <a href={`/product/${id}` } key={id}>
