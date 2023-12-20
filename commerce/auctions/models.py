@@ -45,6 +45,7 @@ class Comments(models.Model):
     comment = models.TextField(max_length=100)
     user  = models.ForeignKey(User, on_delete=models.CASCADE, related_name="auction_commenter")
     iten = models.ForeignKey(auction, on_delete=models.CASCADE, related_name="comments")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def serializer(self):
         return {
