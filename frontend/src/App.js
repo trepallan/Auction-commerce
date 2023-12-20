@@ -19,6 +19,9 @@ function App() {
           <Route path="/logout" element={<Logout/>}/>
           <Route path="/product/:id" element={<Details/>}/>
           <Route path="/makeauction" element={<NewAuction/>}/>
+          <Route path="/myauctions" element={<h1>My Auctions</h1>}/>
+          <Route path="/mybids" element={<h1>My Bids</h1>}/>
+          <Route path="/watchlist" element={<h1>Watch List</h1>}/>
           <Route path="*" element={<h1>404 Page Not Found</h1>}/>
         </Routes>
       </BrowserRouter>);

@@ -33,6 +33,29 @@ function Details() {
       })();
     }, [id]);
 
+    function handleCommentSubmit(e) {
+      e.preventDefault();
+      const comment = document.getElementById("comment").value;
+      (async () => {
+        try {
+          const response = await axios.post(`http://localhost:8000/AddComment/${id}/`, { comment }, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+            }
+          });
+          if (response.status !== 201) {
+            console.log(response);
+            alert("Something went wrong");
+            return;
+          }
+          alert("Comment added successfully");
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+
     function handleDelete() {
       (async () => {
         try {
@@ -129,7 +152,7 @@ function Details() {
       {isSold && (
         <div id="AucisSold">
           <h1>{auction.auction_title} is sold</h1>
-          <p>{auction.buyer} bought it for ${auction.value} from {auction.seller}</p>
+          <p>{auction.buyer} bought it for U${auction.value} from {auction.seller}</p>
         </div>
       )}
 
@@ -184,6 +207,10 @@ function Details() {
         {/* Comments */}
         <div className='auctionComments'>
           <h3>Comments</h3>
+          <form onSubmit={handleCommentSubmit}>
+          <textarea className="form-control" aria-label="With textarea" placeholder="Enter your comment" id="comment"></textarea>
+          <button type="submit" className="btn btn-outline-success">Comment</button>
+          </form>
           <ul>
             {auction.comments.map((comment) => (
               <li key={comment.id}>

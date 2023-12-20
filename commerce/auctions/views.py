@@ -64,6 +64,20 @@ class AuctionView(APIView):
           except Exception as e:
                print(e)
                return Response(status=status.HTTP_400_BAD_REQUEST)
+          
+class CommentView(APIView):
+     # create comment
+     permission_classes = (IsAuthenticated, )
+     def post(self, request, pk):
+          try:
+               auction_id = pk
+               user = request.user
+               comment = request.data.get('comment')
+               Comments.objects.create(user=user, iten=auction.objects.get(id=auction_id), comment=comment)
+               return Response(status=status.HTTP_201_CREATED)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
+          
      
 class WatchlistView(APIView):
      # Add or remove item from watchlist
@@ -122,11 +136,11 @@ class DeleteAuctionView(APIView):
      permission_classes = (IsAuthenticated, )
      def delete(self, request, pk):
           try:
-               seller = request.user
                try:
-                    winner = bids.objects.get(auction=auction.objects.get(id=pk), bid=auction.objects.get(id=pk).price).user
+                    seller = request.user
                     auction_title = auction.objects.get(id=pk).title
                     value = auction.objects.get(id=pk).price
+                    winner = bids.objects.get(auction=pk, bid=value).user
                     if seller != winner:
                          sold.objects.create(auction_id=pk ,auction_title=auction_title , buyer=winner , seller=seller , value=value) 
                except Exception as e:

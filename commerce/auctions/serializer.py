@@ -25,7 +25,7 @@ class AuctionSerializer(serializers.ModelSerializer):
     def get_seller(self, obj):
         return obj.seller.username
     def get_comments(self, obj):
-        comments = Comments.objects.filter(iten=obj)
+        comments = Comments.objects.filter(iten=obj).order_by('-id')
         return  [comment.serializer() for comment in comments]
 
 

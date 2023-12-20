@@ -8,6 +8,7 @@ urlpatterns = [
     path('auction/<int:pk>/', views.AuctionView.as_view(), name ='auction'),
     path('register/', views.CreateUserView.as_view(), name ='register'),
     path('watchlist/', views.WatchlistView.as_view(), name ='watchlist'),
+    path('AddComment/<int:pk>/', views.CommentView.as_view(), name ='comments'),
     path('categories/', views.CategoryView.as_view(), name ='categories'),
     path('newAuction/', views.NewAuctionView.as_view(), name ='new'),
     path('DeleteAuction/<int:pk>/', views.DeleteAuctionView.as_view(), name ='delete'),
