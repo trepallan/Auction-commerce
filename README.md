@@ -1,2 +1,3 @@
 # Auction-commerce
-A web commerce based on auctions still working on it
+A web commerce based on auctions using python/django/react
+still working on it
