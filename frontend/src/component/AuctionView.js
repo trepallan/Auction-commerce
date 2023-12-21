@@ -8,6 +8,7 @@ function Details() {
     const [watchlist, setWatchlist] = useState(false);
     const [watchlistInProgress, setWatchlistInProgress] = useState(false);
     const [isSold, setIsSold] = useState(false);
+    const [isCommented, setIsCommented] = useState(false);
     const { id } = useParams();
   
     useEffect(() => {
@@ -33,27 +34,29 @@ function Details() {
       })();
     }, [id]);
 
+
     function handleCommentSubmit(e) {
       e.preventDefault();
       const comment = document.getElementById("comment").value;
-      (async () => {
-        try {
-          const response = await axios.post(`http://localhost:8000/AddComment/${id}/`, { comment }, {
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+        (async () => {
+          try {
+            const response = await axios.post(`http://localhost:8000/AddComment/${id}/`, { comment }, {
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`
+              }
+            });
+            if (response.status !== 201) {
+              console.log(response);
+              alert("Something went wrong");
+              return;
             }
-          });
-          if (response.status !== 201) {
-            console.log(response);
-            alert("Something went wrong");
-            return;
+            document.getElementById("comment").value = "";
+            setIsCommented(true);
+          } catch (error) {
+            console.log(error);
           }
-          alert("Comment added successfully");
-        } catch (error) {
-          console.log(error);
-        }
-      })();
+        })();
     }
 
     function handleDelete() {
@@ -195,7 +198,7 @@ function Details() {
                 <input type="number" className="form-control" id="bidAmount"/>
               </div>
               <br />
-              <small>Your bid must be higher than the current price of ${auction.price}</small>
+              <small>Your bid must be higher than the current price of U${auction.price}</small>
               <br />
               <div className="d-grid gap-2">
                 <button type="submit" className="btn btn-primary"> Confirm</button>
@@ -207,10 +210,17 @@ function Details() {
         {/* Comments */}
         <div className='auctionComments'>
           <h3>Comments</h3>
-          <form onSubmit={handleCommentSubmit}>
-          <textarea className="form-control" aria-label="With textarea" placeholder="Enter your comment" id="comment"></textarea>
-          <button type="submit" className="btn btn-outline-success">Comment</button>
+          <form id="commentForm" onSubmit={handleCommentSubmit}>
+          <textarea className="form-control" aria-label="With textarea"placeholder="Enter your comment" id="comment"></textarea>
+          <button id='commentBtn' type="submit" className="btn btn-outline-success">Comment</button>
           </form>
+          {isCommented && 
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <span>Comment added successfully</span>
+            <button type="button" class="btn-close" onClick={() => setIsCommented(false)} aria-label="Close"></button>
+          </div>
+          }
+          {auction.comments.length === 0 && <p>No comments yet</p>}
           <ul>
             {auction.comments.map((comment) => (
               <li key={comment.id}>
