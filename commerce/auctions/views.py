@@ -94,6 +94,18 @@ class WatchlistView(APIView):
           except Exception as e:
                return Response(status=status.HTTP_400_BAD_REQUEST)
           
+class GetWatchlistView(APIView):
+     # Add or remove item from watchlist
+     permission_classes = (IsAuthenticated, )
+     def get(self, request):
+          try:
+               user = request.user
+               content = auction.objects.filter(watchlist=user)
+               serializer = AuctionListSerializer(content, many=True)
+               return Response(serializer.data)
+          except Exception as e:
+               return Response(status=status.HTTP_400_BAD_REQUEST)
+          
 
 class BidView(APIView):
      # Add or remove item from watchlist

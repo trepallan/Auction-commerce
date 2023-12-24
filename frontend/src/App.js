@@ -7,6 +7,7 @@ import Logout from './component/Logout';
 import  Details from './component/AuctionView.js';
 import Register from './component/Register';
 import NewAuction from './component/NewAuction';
+import Watchlist from './component/WatchlistView.js';
 
 function App() {
     return( 
@@ -21,7 +22,7 @@ function App() {
           <Route path="/makeauction" element={<NewAuction/>}/>
           <Route path="/myauctions" element={<h1>My Auctions</h1>}/>
           <Route path="/mybids" element={<h1>My Bids</h1>}/>
-          <Route path="/watchlist" element={<h1>Watch List</h1>}/>
+          <Route path="/watchlist" element={<Watchlist/>}/>
           <Route path="*" element={<h1>404 Page Not Found</h1>}/>
         </Routes>
       </BrowserRouter>);

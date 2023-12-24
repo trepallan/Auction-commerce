@@ -170,7 +170,7 @@ function Details() {
           <h1><strong>{auction.title}</strong></h1>
           <p className='text-muted'><small>{auction.category}</small></p>
           <p >{auction.description}</p>
-          <h3>${auction.price}</h3>
+          <h3>U${auction.price}</h3>
           <p className='text-muted'><small>Posted by <strong>{auction.seller}</strong></small></p>
           <div id='ButtonsContainer'>
           { localStorage.getItem('username') === auction.seller && (

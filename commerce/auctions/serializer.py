@@ -40,6 +40,6 @@ class soldSerializer(serializers.ModelSerializer):
         return obj.buyer.username
     def get_seller(self, obj):
         return obj.seller.username
-
+    
 
   
